@@ -26,6 +26,7 @@ class Mainwindow(QMainWindow, Ui_MainWindow):
 
         self.check_signal.check.connect(self.check_signal_handler)
         self.setWindowTitle("이미지 분류")
+        self.pushButton_classify.setEnabled(False)
 
     @Slot()    
     def btn_select_label_handler(self):
@@ -34,7 +35,7 @@ class Mainwindow(QMainWindow, Ui_MainWindow):
             self.label_file_path = file[0]
             self.label_select_label.setText(file[0])
             self.classes_number = []
-            with open(file[0], 'r') as f:
+            with open(file[0], 'r', encoding='utf-8') as f:
                 lines = f.readlines()
                 for line in lines:
                     self.classes_number.append(line.strip())
@@ -89,7 +90,6 @@ class Mainwindow(QMainWindow, Ui_MainWindow):
 
         for idx in classes_number:            
             if int(classes[0][0]) == int(idx[0]):
-                print(f"이미지 분류 결과: {idx[1:]}")
                 self.label_classify_result.setText(f"이미지 분류 결과: {idx[1:]}")
                 break
 
